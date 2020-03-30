@@ -2,6 +2,32 @@
 #include <cmath>
 #include <vector>
 
+bool isBalancedBrackets(const std::string &str)
+{
+	std::stack<char> st{};
+    for(int i = 0; i != str.length(); ++i)
+    {
+    	if(st.empty())
+		{
+			st.push(str[i]);	
+		} 
+		else 
+		{
+			if((st.top() == '(' && str[i] == ')') || (st.top() == '[' && str[i] == ']') || (st.top() == '{' && str[i] == '}') )
+       	 	{
+            	st.pop();
+        	} 
+        	else 
+        	{
+            	st.push(str[i]);
+        	}
+    	}
+    }
+    return st.empty() ? true : false;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 constexpr  long double factorial(const int &number) noexcept
 {
 	if (number < 0) return -1;
@@ -34,7 +60,7 @@ constexpr long double fibbonachi(const int &number) noexcept
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 constexpr long double fibbonachi_gold(const int &number) noexcept
 {
-    // ×åðåç çîëîòîå ñå÷åíèå, ôîðìóëà Áèíå
+    // Ã—Ã¥Ã°Ã¥Ã§ Ã§Ã®Ã«Ã®Ã²Ã®Ã¥ Ã±Ã¥Ã·Ã¥Ã­Ã¨Ã¥, Ã´Ã®Ã°Ã¬Ã³Ã«Ã  ÃÃ¨Ã­Ã¥
     if(number <= 0) return 0;
     if(number == 1) return 1;
     return floor(pow(((1+sqrt(5))/2),number)/sqrt(5));
