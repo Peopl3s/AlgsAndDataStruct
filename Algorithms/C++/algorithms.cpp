@@ -1,7 +1,47 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+double reverse_polish_notation_result(const std::string &str)
+{
+	std::stack<double> st{};
+	double res{};
+	std::stringstream ss{str};
+	std::string txt{};
+	while(ss >> txt)
+	{
+		if((txt == "*" || txt == "+" || txt == "-" || txt == "/") && !st.empty())
+		{
+			int top = st.top();
+			st.pop();
+			int prev = st.top();
+			st.pop();
+			if (txt == "*")
+			{
+				res = top * prev;
+			}
+			else if(txt == "+")
+			{
+					res = top + prev;
+			}
+				else if(txt == "-")
+			{
+					res = prev - top;
+			}
+				else if(txt == "/")
+			{
+					res = prev / top;
+			}
+			st.push(res);
+		} 
+		else 
+		{
+			st.push(std::stod(txt));
+		}
+	}
+	return res;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool isBalancedBrackets(const std::string &str)
 {
 	std::stack<char> st{};
