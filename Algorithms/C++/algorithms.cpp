@@ -1,6 +1,56 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+std::vector<std::vector<bool>> recursive_dfs_for_adj_matrix_graph(const std::vector<std::vector<int>> &g, const int &row, const int &col)
+{
+	static std::vector<std::vector<bool>> visited(g.size(), std::vector<bool>(g.size(),0));
+	visited[row][col] = true;
+	for (int i = row; i != g.size(); ++i)
+	{
+		for(int j = col; j != g.size(); ++j)
+		{
+			if(!visited[i][j])
+			{
+				dfs(g, i, j);	
+			}
+		}
+	}
+	return visited;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+std::vector<std::vector<bool>> bfs_for_adj_matrix_graph(const std::vector<std::vector<int>> &g, const int &row, const int &col)
+{
+	static std::queue<std::pair<int,int>> q{};
+	static std::vector<std::vector<bool>> visited(g.size(), std::vector<bool>(g.size(),false));
+	static std::vector<std::vector<bool>> inque(g.size(), std::vector<bool>(g.size(),false)); 
+	
+	q.push({row, col});
+	inque[row][col] = true;
+	
+	while (!q.empty())
+	{
+		auto c = q.front();
+		q.pop();
+		inque[c.first][c.second] = false;
+		visited[c.first][c.second] = true;
+		
+		for (int i = c.first; i != g.size(); ++i)
+		{
+			for(int j = c.second; j != g.size(); ++j)
+			{
+				if(!visited[i][j] && !inque[i][j])
+				{
+					q.push({i,j});
+					inque[i][j] = true;
+				}
+			}
+		}
+	}	
+	return visited;
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 double reverse_polish_notation_result(const std::string &str)
 {
